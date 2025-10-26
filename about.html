@@ -1,0 +1,918 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us - Innovators Hub</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&family=Orbitron:wght@600;800&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #0a1628 0%, #1a2942 50%, #0d1b2a 100%);
+            color: #ffffff;
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        /* Animated Background Particles */
+        .bg-animation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            overflow: hidden;
+            pointer-events: none;
+        }
+
+        .particle {
+            position: absolute;
+            background: rgba(99, 179, 237, 0.1);
+            border-radius: 50%;
+            animation: float 20s infinite;
+        }
+
+        .particle:nth-child(1) { width: 80px; height: 80px; left: 10%; animation-delay: 0s; }
+        .particle:nth-child(2) { width: 60px; height: 60px; left: 30%; animation-delay: 2s; }
+        .particle:nth-child(3) { width: 100px; height: 100px; left: 50%; animation-delay: 4s; }
+        .particle:nth-child(4) { width: 70px; height: 70px; left: 70%; animation-delay: 6s; }
+        .particle:nth-child(5) { width: 90px; height: 90px; left: 85%; animation-delay: 8s; }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+            10% { opacity: 0.3; }
+            90% { opacity: 0.3; }
+            50% { transform: translateY(-20vh) rotate(180deg); opacity: 0.5; }
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(10, 22, 40, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 1.2rem 5%;
+            z-index: 1000;
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        nav.scrolled {
+            padding: 0.8rem 5%;
+            background: rgba(10, 22, 40, 0.98);
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.8rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #63b3ed, #4299e1, #3182ce);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 30px rgba(99, 179, 237, 0.5);
+            letter-spacing: 2px;
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2.5rem;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: #e2e8f0;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 1rem;
+            position: relative;
+            transition: all 0.3s ease;
+            padding: 0.5rem 0;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, #63b3ed, #4299e1);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: #63b3ed;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .nav-links a.active {
+            color: #63b3ed;
+        }
+
+        .menu-toggle {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            gap: 5px;
+        }
+
+        .menu-toggle span {
+            width: 25px;
+            height: 3px;
+            background: #63b3ed;
+            border-radius: 3px;
+            transition: all 0.3s ease;
+        }
+
+        /* Page Header */
+        .page-header {
+            position: relative;
+            padding: 10rem 5% 5rem;
+            text-align: center;
+            background: linear-gradient(135deg, rgba(66, 153, 225, 0.05), rgba(49, 130, 206, 0.05));
+        }
+
+        .page-header h1 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 4rem;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(135deg, #ffffff, #63b3ed);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: fadeInUp 1s ease;
+        }
+
+        .page-header p {
+            font-size: 1.3rem;
+            color: #cbd5e0;
+            max-width: 800px;
+            margin: 0 auto;
+            line-height: 1.8;
+            animation: fadeInUp 1s ease 0.2s both;
+        }
+
+        /* Story Section */
+        .story-section {
+            position: relative;
+            padding: 5rem 5%;
+        }
+
+        .story-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .story-content h2 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+            color: #63b3ed;
+        }
+
+        .story-content p {
+            font-size: 1.1rem;
+            color: #cbd5e0;
+            margin-bottom: 1.5rem;
+            line-height: 1.9;
+        }
+
+        .story-image {
+            position: relative;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+            transform: perspective(1000px) rotateY(5deg);
+            transition: all 0.5s ease;
+        }
+
+        .story-image:hover {
+            transform: perspective(1000px) rotateY(0deg) scale(1.02);
+        }
+
+        .story-image img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        /* Mission Vision Values */
+        .mvv-section {
+            position: relative;
+            padding: 5rem 5%;
+            background: rgba(13, 27, 42, 0.5);
+            backdrop-filter: blur(10px);
+        }
+
+        .mvv-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 3rem;
+        }
+
+        .mvv-card {
+            background: rgba(26, 41, 66, 0.5);
+            padding: 3rem;
+            border-radius: 20px;
+            border: 1px solid rgba(99, 179, 237, 0.2);
+            transition: all 0.4s ease;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .mvv-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(99, 179, 237, 0.1), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .mvv-card:hover::before {
+            left: 100%;
+        }
+
+        .mvv-card:hover {
+            transform: translateY(-10px);
+            border-color: rgba(99, 179, 237, 0.6);
+            box-shadow: 0 20px 50px rgba(99, 179, 237, 0.2);
+            background: rgba(26, 41, 66, 0.8);
+        }
+
+        .mvv-icon {
+            font-size: 4rem;
+            margin-bottom: 1.5rem;
+            display: block;
+        }
+
+        .mvv-card h3 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+            color: #63b3ed;
+        }
+
+        .mvv-card p {
+            font-size: 1.05rem;
+            color: #cbd5e0;
+            line-height: 1.8;
+        }
+
+        /* Timeline Section */
+        .timeline-section {
+            position: relative;
+            padding: 5rem 5%;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .section-header h2 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #ffffff, #63b3ed);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .section-header p {
+            font-size: 1.2rem;
+            color: #cbd5e0;
+        }
+
+        .timeline {
+            max-width: 1000px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 2px;
+            height: 100%;
+            background: linear-gradient(180deg, rgba(99, 179, 237, 0.1), rgba(99, 179, 237, 0.5), rgba(99, 179, 237, 0.1));
+        }
+
+        .timeline-item {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            margin-bottom: 4rem;
+            position: relative;
+        }
+
+        .timeline-item:nth-child(even) .timeline-content {
+            grid-column: 2;
+        }
+
+        .timeline-item:nth-child(even) .timeline-year {
+            grid-column: 1;
+            text-align: right;
+        }
+
+        .timeline-dot {
+            position: absolute;
+            left: 50%;
+            top: 20px;
+            transform: translateX(-50%);
+            width: 20px;
+            height: 20px;
+            background: linear-gradient(135deg, #4299e1, #3182ce);
+            border-radius: 50%;
+            border: 4px solid #0a1628;
+            box-shadow: 0 0 0 4px rgba(99, 179, 237, 0.2);
+            z-index: 10;
+        }
+
+        .timeline-year {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2.5rem;
+            color: #63b3ed;
+            font-weight: 800;
+        }
+
+        .timeline-content {
+            background: rgba(26, 41, 66, 0.5);
+            padding: 2rem;
+            border-radius: 15px;
+            border: 1px solid rgba(99, 179, 237, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .timeline-content:hover {
+            transform: translateY(-5px);
+            border-color: rgba(99, 179, 237, 0.6);
+            box-shadow: 0 15px 40px rgba(99, 179, 237, 0.2);
+            background: rgba(26, 41, 66, 0.8);
+        }
+
+        .timeline-content h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: #fff;
+        }
+
+        .timeline-content p {
+            color: #cbd5e0;
+            line-height: 1.7;
+        }
+
+        /* Team Leadership */
+        .leadership-section {
+            position: relative;
+            padding: 5rem 5%;
+            background: rgba(13, 27, 42, 0.5);
+            backdrop-filter: blur(10px);
+        }
+
+        .leadership-grid {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 2.5rem;
+        }
+
+        .leader-card {
+            background: rgba(26, 41, 66, 0.5);
+            border-radius: 20px;
+            border: 1px solid rgba(99, 179, 237, 0.2);
+            overflow: hidden;
+            transition: all 0.4s ease;
+            cursor: pointer;
+        }
+
+        .leader-card:hover {
+            transform: translateY(-10px);
+            border-color: rgba(99, 179, 237, 0.6);
+            box-shadow: 0 20px 50px rgba(99, 179, 237, 0.2);
+        }
+
+        .leader-image {
+            width: 100%;
+            height: 250px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .leader-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .leader-card:hover .leader-image img {
+            transform: scale(1.1);
+        }
+
+        .leader-info {
+            padding: 1.5rem;
+            text-align: center;
+        }
+
+        .leader-info h3 {
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+            color: #fff;
+        }
+
+        .leader-info p {
+            color: #63b3ed;
+            font-size: 0.95rem;
+            margin-bottom: 1rem;
+        }
+
+        .leader-social {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+        }
+
+        .leader-social a {
+            width: 35px;
+            height: 35px;
+            background: rgba(99, 179, 237, 0.1);
+            border: 1px solid rgba(99, 179, 237, 0.3);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #63b3ed;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+        }
+
+        .leader-social a:hover {
+            background: #63b3ed;
+            color: #0a1628;
+            transform: translateY(-3px);
+        }
+
+        /* Achievements Section */
+        .achievements-section {
+            position: relative;
+            padding: 5rem 5%;
+        }
+
+        .achievements-grid {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2.5rem;
+        }
+
+        .achievement-card {
+            background: rgba(26, 41, 66, 0.5);
+            padding: 2.5rem;
+            border-radius: 20px;
+            border: 1px solid rgba(99, 179, 237, 0.2);
+            transition: all 0.4s ease;
+            text-align: center;
+        }
+
+        .achievement-card:hover {
+            transform: translateY(-10px);
+            border-color: rgba(99, 179, 237, 0.6);
+            box-shadow: 0 20px 50px rgba(99, 179, 237, 0.2);
+            background: rgba(26, 41, 66, 0.8);
+        }
+
+        .achievement-icon {
+            font-size: 3.5rem;
+            margin-bottom: 1.5rem;
+            display: block;
+        }
+
+        .achievement-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: #63b3ed;
+        }
+
+        .achievement-card p {
+            color: #cbd5e0;
+            line-height: 1.7;
+        }
+
+        /* CTA Section */
+        .cta {
+            position: relative;
+            padding: 6rem 5%;
+            background: linear-gradient(135deg, rgba(66, 153, 225, 0.1), rgba(49, 130, 206, 0.1));
+            backdrop-filter: blur(10px);
+        }
+
+        .cta-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .cta-container h2 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 3rem;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(135deg, #ffffff, #63b3ed);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .cta-container p {
+            font-size: 1.3rem;
+            color: #cbd5e0;
+            margin-bottom: 2.5rem;
+            line-height: 1.8;
+        }
+
+        .btn {
+            padding: 1rem 2.5rem;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 1.1rem;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            display: inline-block;
+            cursor: pointer;
+            border: none;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #4299e1, #3182ce);
+            color: white;
+            box-shadow: 0 10px 30px rgba(66, 153, 225, 0.4);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(66, 153, 225, 0.6);
+        }
+
+        /* Footer */
+        footer {
+            position: relative;
+            background: rgba(10, 22, 40, 0.95);
+            padding: 3rem 5% 1.5rem;
+            border-top: 1px solid rgba(99, 179, 237, 0.2);
+        }
+
+        .footer-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 3rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-section h3 {
+            color: #63b3ed;
+            margin-bottom: 1.5rem;
+            font-size: 1.3rem;
+        }
+
+        .footer-section p {
+            color: #cbd5e0;
+            line-height: 1.8;
+            margin-bottom: 1rem;
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 0.8rem;
+        }
+
+        .footer-links a {
+            color: #cbd5e0;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: #63b3ed;
+            padding-left: 5px;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .social-links a {
+            width: 40px;
+            height: 40px;
+            background: rgba(99, 179, 237, 0.1);
+            border: 1px solid rgba(99, 179, 237, 0.3);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #63b3ed;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .social-links a:hover {
+            background: #63b3ed;
+            color: #0a1628;
+            transform: translateY(-3px);
+        }
+
+        .footer-bottom {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(99, 179, 237, 0.1);
+            text-align: center;
+            color: #cbd5e0;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1024px) {
+            .story-container {
+                grid-template-columns: 1fr;
+            }
+
+            .mvv-container {
+                grid-template-columns: 1fr;
+            }
+
+            .leadership-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .achievements-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .timeline::before {
+                left: 30px;
+            }
+
+            .timeline-item {
+                grid-template-columns: 1fr;
+                padding-left: 80px;
+            }
+
+            .timeline-dot {
+                left: 30px;
+            }
+
+            .timeline-item:nth-child(even) .timeline-content {
+                grid-column: 1;
+            }
+
+            .timeline-item:nth-child(even) .timeline-year {
+                grid-column: 1;
+                text-align: left;
+            }
+
+            .timeline-year {
+                font-size: 2rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                position: fixed;
+                top: 80px;
+                left: -100%;
+                flex-direction: column;
+                background: rgba(10, 22, 40, 0.98);
+                width: 100%;
+                padding: 2rem;
+                gap: 1.5rem;
+                transition: left 0.3s ease;
+                align-items: flex-start;
+            }
+
+            .nav-links.active {
+                left: 0;
+            }
+
+            .menu-toggle {
+                display: flex;
+            }
+
+            .page-header h1 {
+                font-size: 2.5rem;
+            }
+
+            .page-header p {
+                font-size: 1.1rem;
+            }
+
+            .leadership-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .achievements-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .footer-content {
+                grid-template-columns: 1fr;
+            }
+
+            .timeline-item {
+                padding-left: 60px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Background Animation -->
+    <div class="bg-animation">
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+    </div>
+
+    <!-- Navigation -->
+    <nav id="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="logo">INNOVATORS HUB</a>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="about.html" class="active">About</a></li>
+                <li><a href="projects.html">Projects</a></li>
+                <li><a href="members.html">Members</a></li>
+                <li><a href="events.html">Events</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+            <div class="menu-toggle" id="menuToggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Page Header -->
+    <section class="page-header">
+        <h1>About Innovators Hub</h1>
+        <p>We are a passionate community of student innovators, developers, and tech enthusiasts dedicated to pushing the boundaries of technology and creating meaningful impact.</p>
+    </section>
+
+    <!-- Story Section -->
+    <section class="story-section">
+        <div class="story-container">
+            <div class="story-content">
+                <h2>Our Story</h2>
+                <p>Innovators Hub was founded in 2020 by a group of passionate students who shared a common vision: to create a collaborative space where technology enthusiasts could learn, build, and innovate together.</p>
+                <p>What started as a small group of 15 members has now grown into a thriving community of over 200 active members. We've completed more than 50 projects, hosted countless workshops, and created lasting connections with industry leaders.</p>
+                <p>Today, we stand as one of the most active and innovative student tech clubs on campus, constantly pushing the boundaries of what's possible and inspiring the next generation of tech leaders.</p>
+            </div>
+            <div class="story-image">
+                <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=800&h=600&fit=crop" alt="Team Working Together">
+            </div>
+        </div>
+    </section>
+
+    <!-- Mission Vision Values -->
+    <section class="mvv-section">
+        <div class="mvv-container">
+            <div class="mvv-card">
+                <span class="mvv-icon">🎯</span>
+                <h3>Our Mission</h3>
+                <p>To empower students with cutting-edge technology skills, foster innovation, and create a collaborative environment where ideas transform into impactful solutions.</p>
+            </div>
+            <div class="mvv-card">
+                <span class="mvv-icon">🔭</span>
+                <h3>Our Vision</h3>
+                <p>To be the leading student tech community that bridges the gap between academic learning and real-world technology applications, producing future industry leaders.</p>
+            </div>
+            <div class="mvv-card">
+                <span class="mvv-icon">💎</span>
+                <h3>Our Values</h3>
+                <p>Innovation, Collaboration, Excellence, Integrity, and Continuous Learning. We believe in creating an inclusive environment where everyone can thrive.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Timeline Section -->
+    <section class="timeline-section">
+        <div class="section-header">
+            <h2>Our Journey</h2>
+            <p>Milestones that shaped our community</p>
+        </div>
+        <div class="timeline">
+            <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="timeline-year">2020</div>
+                <div class="timeline-content">
+                    <h3>The Beginning</h3>
+                    <p>Innovators Hub was founded by 15 passionate students with a vision to create a collaborative tech community on campus.</p>
+                </div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="timeline-year">2021</div>
+                <div class="timeline-content">
+                    <h3>First Hackathon</h3>
+                    <p>Successfully organized our first 24-hour hackathon with over 100 participants and 5 industry sponsors.</p>
+                </div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="timeline-year">2022</div>
+                <div class="timeline-content">
+                    <h3>Innovation Lab Launch</h3>
+                    <p>Opened our state-of-the-art innovation lab equipped with the latest technology and resources for student projects.</p>
+                </div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="timeline-year">2023</div>
+                <div class="timeline-content">
+                    <h3>Industry Partnerships</h3>
+                    <p>Established partnerships with 15+ leading tech companies, providing internship and mentorship opportunities for members.</p>
+                </div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="timeline-year">2024</div>
+                <div class="timeline-content">
+                    <h3>200+ Members Strong</h3>
+                    <p>Reached a milestone of 200+ active members and completed 50+ innovative projects across various technology domains.</p>
+                </div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="timeline-year">2025</div>
+                <div class="timeline-content">
+                    <h3>Future Forward</h3>
+                    <p>Continuing to expand our reach, launching new initiatives in AI/ML, cybersecurity, and sustainable technology solutions.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Leadership Section -->
+    <section class="leadership-section">
+        <div class="section-header">
+            <h2>Meet Our Leadership Team</h2>
+            <p>The passionate individuals driving our vision</p>
+        </div>
+        <!-- Leadership content was missing from your original code, you can add it here -->
+    </section>
+
+    <!-- ... rest of your about.html content ... -->
+
+</body>
+</html>

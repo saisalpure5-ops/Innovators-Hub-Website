@@ -1,0 +1,814 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Events - Innovators Hub</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&family=Orbitron:wght@600;800&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #0a1628 0%, #1a2942 50%, #0d1b2a 100%);
+            color: #ffffff;
+            overflow-x: hidden;
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        .bg-animation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            overflow: hidden;
+            pointer-events: none;
+        }
+
+        .particle {
+            position: absolute;
+            background: rgba(99, 179, 237, 0.1);
+            border-radius: 50%;
+            animation: float 20s infinite;
+        }
+
+        .particle:nth-child(1) { width: 80px; height: 80px; left: 10%; animation-delay: 0s; }
+        .particle:nth-child(2) { width: 60px; height: 60px; left: 30%; animation-delay: 2s; }
+        .particle:nth-child(3) { width: 100px; height: 100px; left: 50%; animation-delay: 4s; }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+            10% { opacity: 0.3; }
+            50% { transform: translateY(-20vh) rotate(180deg); opacity: 0.5; }
+        }
+
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(10, 22, 40, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 1.2rem 5%;
+            z-index: 1000;
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.8rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #63b3ed, #4299e1, #3182ce);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2.5rem;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: #e2e8f0;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .nav-links a:hover, .nav-links a.active {
+            color: #63b3ed;
+        }
+
+        .menu-toggle {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            gap: 5px;
+        }
+
+        .menu-toggle span {
+            width: 25px;
+            height: 3px;
+            background: #63b3ed;
+            border-radius: 3px;
+        }
+
+        .page-header {
+            position: relative;
+            padding: 10rem 5% 3rem;
+            text-align: center;
+            z-index: 1;
+        }
+
+        .page-header h1 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #ffffff, #63b3ed);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .page-header p {
+            font-size: 1.2rem;
+            color: #cbd5e0;
+            max-width: 700px;
+            margin: 0 auto 2rem;
+        }
+
+        .filter-tabs {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .tab-btn {
+            padding: 0.7rem 1.5rem;
+            background: rgba(26, 41, 66, 0.5);
+            border: 1px solid rgba(99, 179, 237, 0.3);
+            border-radius: 30px;
+            color: #cbd5e0;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Poppins', sans-serif;
+            font-size: 0.95rem;
+        }
+
+        .tab-btn:hover, .tab-btn.active {
+            background: linear-gradient(135deg, #4299e1, #3182ce);
+            color: white;
+            border-color: transparent;
+            transform: translateY(-2px);
+        }
+
+        /* Upcoming Events Section */
+        .upcoming-section {
+            position: relative;
+            padding: 4rem 5%;
+            z-index: 1;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .section-title h2 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2.5rem;
+            color: #63b3ed;
+            margin-bottom: 0.5rem;
+        }
+
+        .events-grid {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 2.5rem;
+        }
+
+        .event-card {
+            background: rgba(26, 41, 66, 0.6);
+            border-radius: 20px;
+            border: 1px solid rgba(99, 179, 237, 0.2);
+            overflow: hidden;
+            transition: all 0.4s ease;
+            cursor: pointer;
+        }
+
+        .event-card:hover {
+            transform: translateY(-10px);
+            border-color: rgba(99, 179, 237, 0.6);
+            box-shadow: 0 20px 50px rgba(99, 179, 237, 0.3);
+            background: rgba(26, 41, 66, 0.8);
+        }
+
+        .event-header {
+            background: linear-gradient(135deg, #1a2942, #2d3e5f);
+            padding: 2rem;
+            text-align: center;
+            position: relative;
+        }
+
+        .event-icon {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            display: block;
+        }
+
+        .event-date {
+            background: rgba(66, 153, 225, 0.2);
+            border: 1px solid rgba(99, 179, 237, 0.4);
+            border-radius: 10px;
+            padding: 0.5rem 1rem;
+            display: inline-block;
+            font-size: 0.9rem;
+            color: #63b3ed;
+            font-weight: 600;
+        }
+
+        .event-content {
+            padding: 2rem;
+        }
+
+        .event-category {
+            display: inline-block;
+            padding: 0.4rem 1rem;
+            background: rgba(99, 179, 237, 0.15);
+            border: 1px solid rgba(99, 179, 237, 0.4);
+            border-radius: 20px;
+            font-size: 0.85rem;
+            color: #63b3ed;
+            margin-bottom: 1rem;
+        }
+
+        .event-content h3 {
+            font-size: 1.6rem;
+            margin-bottom: 1rem;
+            color: #fff;
+        }
+
+        .event-content p {
+            color: #cbd5e0;
+            line-height: 1.7;
+            margin-bottom: 1.5rem;
+            font-size: 0.95rem;
+        }
+
+        .event-details {
+            display: flex;
+            flex-direction: column;
+            gap: 0.8rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .detail-item {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            color: #cbd5e0;
+            font-size: 0.9rem;
+        }
+
+        .detail-icon {
+            font-size: 1.2rem;
+        }
+
+        .event-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 1rem;
+            border-top: 1px solid rgba(99, 179, 237, 0.2);
+        }
+
+        .event-status {
+            font-size: 0.85rem;
+            color: #cbd5e0;
+        }
+
+        .register-btn {
+            padding: 0.7rem 1.5rem;
+            background: linear-gradient(135deg, #4299e1, #3182ce);
+            border: none;
+            border-radius: 25px;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            font-size: 0.95rem;
+            font-weight: 600;
+        }
+
+        .register-btn:hover {
+            box-shadow: 0 5px 20px rgba(66, 153, 225, 0.5);
+            transform: translateX(3px);
+        }
+
+        /* Past Events Section */
+        .past-events-section {
+            position: relative;
+            padding: 4rem 5%;
+            background: rgba(13, 27, 42, 0.5);
+            backdrop-filter: blur(10px);
+            z-index: 1;
+        }
+
+        .past-events-grid {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .past-event-card {
+            background: rgba(26, 41, 66, 0.5);
+            border-radius: 15px;
+            border: 1px solid rgba(99, 179, 237, 0.2);
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .past-event-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(99, 179, 237, 0.5);
+            box-shadow: 0 15px 40px rgba(99, 179, 237, 0.2);
+        }
+
+        .past-event-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .past-event-icon {
+            font-size: 2.5rem;
+        }
+
+        .past-event-info h4 {
+            font-size: 1.2rem;
+            color: #fff;
+            margin-bottom: 0.3rem;
+        }
+
+        .past-event-date {
+            font-size: 0.85rem;
+            color: #63b3ed;
+        }
+
+        .past-event-stats {
+            display: flex;
+            gap: 1.5rem;
+            padding-top: 1rem;
+            border-top: 1px solid rgba(99, 179, 237, 0.2);
+            font-size: 0.9rem;
+            color: #cbd5e0;
+        }
+
+        /* Event Calendar Section */
+        .calendar-section {
+            position: relative;
+            padding: 4rem 5%;
+            z-index: 1;
+        }
+
+        .calendar-container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: rgba(26, 41, 66, 0.6);
+            border-radius: 20px;
+            border: 1px solid rgba(99, 179, 237, 0.2);
+            padding: 2.5rem;
+        }
+
+        .calendar-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .calendar-header h3 {
+            font-size: 1.8rem;
+            color: #63b3ed;
+            margin-bottom: 0.5rem;
+        }
+
+        .upcoming-highlights {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .highlight-item {
+            background: rgba(13, 27, 42, 0.5);
+            padding: 1.5rem;
+            border-radius: 15px;
+            border-left: 4px solid #63b3ed;
+            transition: all 0.3s ease;
+        }
+
+        .highlight-item:hover {
+            transform: translateX(10px);
+            border-color: #4299e1;
+        }
+
+        .highlight-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.8rem;
+        }
+
+        .highlight-title {
+            font-size: 1.2rem;
+            color: #fff;
+            font-weight: 600;
+        }
+
+        .highlight-date {
+            font-size: 0.85rem;
+            color: #63b3ed;
+            background: rgba(99, 179, 237, 0.1);
+            padding: 0.3rem 0.8rem;
+            border-radius: 10px;
+        }
+
+        .highlight-desc {
+            color: #cbd5e0;
+            font-size: 0.95rem;
+        }
+
+        footer {
+            position: relative;
+            background: rgba(10, 22, 40, 0.95);
+            padding: 2rem 5%;
+            border-top: 1px solid rgba(99, 179, 237, 0.2);
+            text-align: center;
+            color: #cbd5e0;
+            z-index: 1;
+        }
+
+        @media (max-width: 1024px) {
+            .events-grid {
+                grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                position: fixed;
+                top: 80px;
+                left: -100%;
+                flex-direction: column;
+                background: rgba(10, 22, 40, 0.98);
+                width: 100%;
+                padding: 2rem;
+                transition: left 0.3s ease;
+            }
+
+            .nav-links.active {
+                left: 0;
+            }
+
+            .menu-toggle {
+                display: flex;
+            }
+
+            .page-header h1 {
+                font-size: 2.5rem;
+            }
+
+            .events-grid,
+            .past-events-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-animation">
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+    </div>
+
+    <nav id="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="logo">INNOVATORS HUB</a>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="projects.html">Projects</a></li>
+                <li><a href="members.html">Members</a></li>
+                <li><a href="events.html" class="active">Events</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+            <div class="menu-toggle" id="menuToggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <section class="page-header">
+        <h1>Events & Activities</h1>
+        <p>Join us for exciting workshops, hackathons, and tech talks</p>
+        <div class="filter-tabs">
+            <button class="tab-btn active">All Events</button>
+            <button class="tab-btn">Workshops</button>
+            <button class="tab-btn">Hackathons</button>
+            <button class="tab-btn">Tech Talks</button>
+            <button class="tab-btn">Competitions</button>
+        </div>
+    </section>
+
+    <!-- Upcoming Events -->
+    <section class="upcoming-section">
+        <div class="section-title">
+            <h2>Upcoming Events</h2>
+        </div>
+        <div class="events-grid">
+            <div class="event-card">
+                <div class="event-header">
+                    <span class="event-icon">🚀</span>
+                    <div class="event-date">Nov 15-17, 2025</div>
+                </div>
+                <div class="event-content">
+                    <span class="event-category">Hackathon</span>
+                    <h3>Innovation Hackathon 2025</h3>
+                    <p>48-hour coding marathon to build innovative solutions for real-world problems. Amazing prizes and mentorship opportunities!</p>
+                    <div class="event-details">
+                        <div class="detail-item">
+                            <span class="detail-icon">📍</span>
+                            <span>Main Campus Auditorium</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-icon">👥</span>
+                            <span>Team Size: 3-5 members</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-icon">🎁</span>
+                            <span>Prize Pool: $5,000</span>
+                        </div>
+                    </div>
+                    <div class="event-footer">
+                        <span class="event-status">150 Registered</span>
+                        <a href="#" class="register-btn">Register Now →</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="event-card">
+                <div class="event-header">
+                    <span class="event-icon">🤖</span>
+                    <div class="event-date">Nov 22, 2025</div>
+                </div>
+                <div class="event-content">
+                    <span class="event-category">Workshop</span>
+                    <h3>AI & Machine Learning Workshop</h3>
+                    <p>Learn the fundamentals of AI and ML from industry experts. Hands-on projects and real-world applications covered.</p>
+                    <div class="event-details">
+                        <div class="detail-item">
+                            <span class="detail-icon">📍</span>
+                            <span>Innovation Lab, Building A</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-icon">⏰</span>
+                            <span>9:00 AM - 5:00 PM</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-icon">💰</span>
+                            <span>Free for Members</span>
+                        </div>
+                    </div>
+                    <div class="event-footer">
+                        <span class="event-status">85 Registered</span>
+                        <a href="#" class="register-btn">Register Now →</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="event-card">
+                <div class="event-header">
+                    <span class="event-icon">💡</span>
+                    <div class="event-date">Dec 5, 2025</div>
+                </div>
+                <div class="event-content">
+                    <span class="event-category">Tech Talk</span>
+                    <h3>Future of Web Development</h3>
+                    <p>Industry leader discusses emerging trends, best practices, and career opportunities in modern web development.</p>
+                    <div class="event-details">
+                        <div class="detail-item">
+                            <span class="detail-icon">📍</span>
+                            <span>Virtual Event (Zoom)</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-icon">⏰</span>
+                            <span>6:00 PM - 8:00 PM</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-icon">🎤</span>
+                            <span>Speaker: Tech Industry Expert</span>
+                        </div>
+                    </div>
+                    <div class="event-footer">
+                        <span class="event-status">200 Registered</span>
+                        <a href="#" class="register-btn">Register Now →</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="event-card">
+                <div class="event-header">
+                    <span class="event-icon">🏆</span>
+                    <div class="event-date">Dec 12, 2025</div>
+                </div>
+                <div class="event-content">
+                    <span class="event-category">Competition</span>
+                    <h3>Code Sprint Challenge</h3>
+                    <p>Fast-paced competitive programming event. Test your coding skills and problem-solving abilities against the best!</p>
+                    <div class="event-details">
+                        <div class="detail-item">
+                            <span class="detail-icon">📍</span>
+                            <span>Computer Lab 3</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-icon">⏰</span>
+                            <span>2:00 PM - 6:00 PM</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-icon">🎁</span>
+                            <span>Prizes & Certificates</span>
+                        </div>
+                    </div>
+                    <div class="event-footer">
+                        <span class="event-status">120 Registered</span>
+                        <a href="#" class="register-btn">Register Now →</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Event Calendar -->
+    <section class="calendar-section">
+        <div class="calendar-container">
+            <div class="calendar-header">
+                <h3>Quick Event Calendar</h3>
+                <p style="color: #cbd5e0;">Mark your calendars for these upcoming dates</p>
+            </div>
+            <div class="upcoming-highlights">
+                <div class="highlight-item">
+                    <div class="highlight-header">
+                        <span class="highlight-title">🚀 Innovation Hackathon 2025</span>
+                        <span class="highlight-date">Nov 15-17</span>
+                    </div>
+                    <p class="highlight-desc">48-hour coding marathon with amazing prizes</p>
+                </div>
+                <div class="highlight-item">
+                    <div class="highlight-header">
+                        <span class="highlight-title">🤖 AI & ML Workshop</span>
+                        <span class="highlight-date">Nov 22</span>
+                    </div>
+                    <p class="highlight-desc">Learn AI fundamentals from industry experts</p>
+                </div>
+                <div class="highlight-item">
+                    <div class="highlight-header">
+                        <span class="highlight-title">💡 Web Development Tech Talk</span>
+                        <span class="highlight-date">Dec 5</span>
+                    </div>
+                    <p class="highlight-desc">Future trends in modern web development</p>
+                </div>
+                <div class="highlight-item">
+                    <div class="highlight-header">
+                        <span class="highlight-title">🏆 Code Sprint Challenge</span>
+                        <span class="highlight-date">Dec 12</span>
+                    </div>
+                    <p class="highlight-desc">Competitive programming competition</p>
+                </div>
+                <div class="highlight-item">
+                    <div class="highlight-header">
+                        <span class="highlight-title">🎄 Year-End Tech Fest</span>
+                        <span class="highlight-date">Dec 20</span>
+                    </div>
+                    <p class="highlight-desc">Celebration with project showcase and awards</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Past Events -->
+    <section class="past-events-section">
+        <div class="section-title">
+            <h2>Past Events</h2>
+        </div>
+        <div class="past-events-grid">
+            <div class="past-event-card">
+                <div class="past-event-header">
+                    <span class="past-event-icon">🎓</span>
+                    <div class="past-event-info">
+                        <h4>Python Bootcamp</h4>
+                        <p class="past-event-date">October 15, 2025</p>
+                    </div>
+                </div>
+                <div class="past-event-stats">
+                    <span>👥 150 Attendees</span>
+                    <span>⭐ 4.8/5.0</span>
+                </div>
+            </div>
+
+            <div class="past-event-card">
+                <div class="past-event-header">
+                    <span class="past-event-icon">🌐</span>
+                    <div class="past-event-info">
+                        <h4>Web Dev Summit</h4>
+                        <p class="past-event-date">September 28, 2025</p>
+                    </div>
+                </div>
+                <div class="past-event-stats">
+                    <span>👥 200 Attendees</span>
+                    <span>⭐ 4.9/5.0</span>
+                </div>
+            </div>
+
+            <div class="past-event-card">
+                <div class="past-event-header">
+                    <span class="past-event-icon">📱</span>
+                    <div class="past-event-info">
+                        <h4>Mobile App Development</h4>
+                        <p class="past-event-date">September 10, 2025</p>
+                    </div>
+                </div>
+                <div class="past-event-stats">
+                    <span>👥 120 Attendees</span>
+                    <span>⭐ 4.7/5.0</span>
+                </div>
+            </div>
+
+            <div class="past-event-card">
+                <div class="past-event-header">
+                    <span class="past-event-icon">🔐</span>
+                    <div class="past-event-info">
+                        <h4>Cybersecurity Workshop</h4>
+                        <p class="past-event-date">August 22, 2025</p>
+                    </div>
+                </div>
+                <div class="past-event-stats">
+                    <span>👥 180 Attendees</span>
+                    <span>⭐ 4.8/5.0</span>
+                </div>
+            </div>
+
+            <div class="past-event-card">
+                <div class="past-event-header">
+                    <span class="past-event-icon">☁️</span>
+                    <div class="past-event-info">
+                        <h4>Cloud Computing Seminar</h4>
+                        <p class="past-event-date">August 5, 2025</p>
+                    </div>
+                </div>
+                <div class="past-event-stats">
+                    <span>👥 160 Attendees</span>
+                    <span>⭐ 4.6/5.0</span>
+                </div>
+            </div>
+
+            <div class="past-event-card">
+                <div class="past-event-header">
+                    <span class="past-event-icon">🎨</span>
+                    <div class="past-event-info">
+                        <h4>UI/UX Design Workshop</h4>
+                        <p class="past-event-date">July 18, 2025</p>
+                    </div>
+                </div>
+                <div class="past-event-stats">
+                    <span>👥 140 Attendees</span>
+                    <span>⭐ 4.9/5.0</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2025 Innovators Hub. All rights reserved. Built with passion by students, for students.</p>
+    </footer>
+
+    <script>
+        const menuToggle = document.getElementById('menuToggle');
+        const navLinks = document.getElementById('navLinks');
+
+        menuToggle.addEventListener('click', function() {
+            navLinks.classList.toggle('active');
+        });
+
+        const tabButtons = document.querySelectorAll('.tab-btn');
+        tabButtons.forEach(btn => {
+            btn.addEventListener('click', function() {
+                tabButtons.forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+            });
+        });
+    </script>
+</body>
+</html>

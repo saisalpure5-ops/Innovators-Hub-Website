@@ -1,0 +1,682 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Members - Innovators Hub</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&family=Orbitron:wght@600;800&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #0a1628 0%, #1a2942 50%, #0d1b2a 100%);
+            color: #ffffff;
+            overflow-x: hidden;
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        .bg-animation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            overflow: hidden;
+            pointer-events: none;
+        }
+
+        .particle {
+            position: absolute;
+            background: rgba(99, 179, 237, 0.1);
+            border-radius: 50%;
+            animation: float 20s infinite;
+        }
+
+        .particle:nth-child(1) { width: 80px; height: 80px; left: 10%; animation-delay: 0s; }
+        .particle:nth-child(2) { width: 60px; height: 60px; left: 30%; animation-delay: 2s; }
+        .particle:nth-child(3) { width: 100px; height: 100px; left: 50%; animation-delay: 4s; }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+            10% { opacity: 0.3; }
+            50% { transform: translateY(-20vh) rotate(180deg); opacity: 0.5; }
+        }
+
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(10, 22, 40, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 1.2rem 5%;
+            z-index: 1000;
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.8rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #63b3ed, #4299e1, #3182ce);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2.5rem;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: #e2e8f0;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .nav-links a:hover, .nav-links a.active {
+            color: #63b3ed;
+        }
+
+        .menu-toggle {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            gap: 5px;
+        }
+
+        .menu-toggle span {
+            width: 25px;
+            height: 3px;
+            background: #63b3ed;
+            border-radius: 3px;
+        }
+
+        .page-header {
+            position: relative;
+            padding: 10rem 5% 3rem;
+            text-align: center;
+            z-index: 1;
+        }
+
+        .page-header h1 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #ffffff, #63b3ed);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .page-header p {
+            font-size: 1.2rem;
+            color: #cbd5e0;
+            max-width: 700px;
+            margin: 0 auto 2rem;
+        }
+
+        /* Leadership Section */
+        .leadership-section {
+            position: relative;
+            padding: 3rem 5% 4rem;
+            z-index: 1;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .section-title h2 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2.5rem;
+            color: #63b3ed;
+            margin-bottom: 0.5rem;
+        }
+
+        .section-title p {
+            color: #cbd5e0;
+            font-size: 1.1rem;
+        }
+
+        .leadership-grid {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2.5rem;
+        }
+
+        .member-card {
+            background: rgba(26, 41, 66, 0.6);
+            border-radius: 20px;
+            border: 1px solid rgba(99, 179, 237, 0.2);
+            overflow: hidden;
+            transition: all 0.4s ease;
+            cursor: pointer;
+            text-align: center;
+        }
+
+        .member-card:hover {
+            transform: translateY(-10px);
+            border-color: rgba(99, 179, 237, 0.6);
+            box-shadow: 0 20px 50px rgba(99, 179, 237, 0.3);
+            background: rgba(26, 41, 66, 0.8);
+        }
+
+        .member-avatar {
+            width: 100%;
+            height: 250px;
+            background: linear-gradient(135deg, #1a2942, #2d3e5f);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 6rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .member-avatar::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 50%;
+            background: linear-gradient(to top, rgba(10, 22, 40, 0.8), transparent);
+        }
+
+        .member-info {
+            padding: 2rem;
+        }
+
+        .member-info h3 {
+            font-size: 1.4rem;
+            margin-bottom: 0.5rem;
+            color: #fff;
+        }
+
+        .member-role {
+            color: #63b3ed;
+            font-size: 1rem;
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+
+        .member-bio {
+            color: #cbd5e0;
+            font-size: 0.95rem;
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+        }
+
+        .member-skills {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .skill-tag {
+            padding: 0.4rem 0.9rem;
+            background: rgba(99, 179, 237, 0.15);
+            border: 1px solid rgba(99, 179, 237, 0.3);
+            border-radius: 15px;
+            font-size: 0.8rem;
+            color: #63b3ed;
+        }
+
+        .member-social {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+        }
+
+        .social-icon {
+            width: 38px;
+            height: 38px;
+            background: rgba(99, 179, 237, 0.1);
+            border: 1px solid rgba(99, 179, 237, 0.3);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #63b3ed;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            font-size: 1.1rem;
+        }
+
+        .social-icon:hover {
+            background: #63b3ed;
+            color: #0a1628;
+            transform: translateY(-3px);
+        }
+
+        /* Team Members Section */
+        .team-section {
+            position: relative;
+            padding: 3rem 5% 5rem;
+            background: rgba(13, 27, 42, 0.5);
+            backdrop-filter: blur(10px);
+            z-index: 1;
+        }
+
+        .team-grid {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .team-member-card {
+            background: rgba(26, 41, 66, 0.5);
+            border-radius: 15px;
+            border: 1px solid rgba(99, 179, 237, 0.2);
+            padding: 2rem;
+            text-align: center;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .team-member-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(99, 179, 237, 0.5);
+            box-shadow: 0 15px 40px rgba(99, 179, 237, 0.2);
+        }
+
+        .team-avatar {
+            width: 100px;
+            height: 100px;
+            background: linear-gradient(135deg, #4299e1, #3182ce);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+            margin: 0 auto 1rem;
+            border: 3px solid rgba(99, 179, 237, 0.3);
+        }
+
+        .team-member-card h4 {
+            font-size: 1.2rem;
+            margin-bottom: 0.3rem;
+            color: #fff;
+        }
+
+        .team-role {
+            color: #63b3ed;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+
+        .team-specialty {
+            color: #cbd5e0;
+            font-size: 0.85rem;
+        }
+
+        /* Stats Section */
+        .stats-section {
+            position: relative;
+            padding: 4rem 5%;
+            z-index: 1;
+        }
+
+        .stats-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 2rem;
+            text-align: center;
+        }
+
+        .stat-box {
+            background: rgba(26, 41, 66, 0.5);
+            padding: 2.5rem;
+            border-radius: 15px;
+            border: 1px solid rgba(99, 179, 237, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .stat-box:hover {
+            transform: translateY(-5px);
+            border-color: rgba(99, 179, 237, 0.5);
+        }
+
+        .stat-box h3 {
+            font-size: 3rem;
+            color: #63b3ed;
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-box p {
+            color: #cbd5e0;
+            font-size: 1.1rem;
+        }
+
+        footer {
+            position: relative;
+            background: rgba(10, 22, 40, 0.95);
+            padding: 2rem 5%;
+            border-top: 1px solid rgba(99, 179, 237, 0.2);
+            text-align: center;
+            color: #cbd5e0;
+            z-index: 1;
+        }
+
+        @media (max-width: 1024px) {
+            .leadership-grid {
+                grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            }
+
+            .team-grid {
+                grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            }
+
+            .stats-container {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                position: fixed;
+                top: 80px;
+                left: -100%;
+                flex-direction: column;
+                background: rgba(10, 22, 40, 0.98);
+                width: 100%;
+                padding: 2rem;
+                transition: left 0.3s ease;
+            }
+
+            .nav-links.active {
+                left: 0;
+            }
+
+            .menu-toggle {
+                display: flex;
+            }
+
+            .page-header h1 {
+                font-size: 2.5rem;
+            }
+
+            .leadership-grid,
+            .team-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .stats-container {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-animation">
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+    </div>
+
+    <nav id="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="logo">INNOVATORS HUB</a>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="projects.html">Projects</a></li>
+                <li><a href="members.html" class="active">Members</a></li>
+                <li><a href="events.html">Events</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+            <div class="menu-toggle" id="menuToggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <section class="page-header">
+        <h1>Our Team</h1>
+        <p>Meet the passionate innovators driving our community forward</p>
+    </section>
+
+    <!-- Leadership Team -->
+    <section class="leadership-section">
+        <div class="section-title">
+            <h2>Leadership Team</h2>
+            <p>The visionaries leading our innovation journey</p>
+        </div>
+        <div class="leadership-grid">
+            <div class="member-card">
+                <div class="member-avatar">👨‍💼</div>
+                <div class="member-info">
+                    <h3>Arjun Kumar</h3>
+                    <p class="member-role">President</p>
+                    <p class="member-bio">Computer Science senior passionate about AI and community building. Leading the club towards new heights.</p>
+                    <div class="member-skills">
+                        <span class="skill-tag">Leadership</span>
+                        <span class="skill-tag">AI/ML</span>
+                        <span class="skill-tag">Strategy</span>
+                    </div>
+                    <div class="member-social">
+                        <a href="#" class="social-icon">📧</a>
+                        <a href="#" class="social-icon">💼</a>
+                        <a href="#" class="social-icon">🐙</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="member-card">
+                <div class="member-avatar">👩‍💼</div>
+                <div class="member-info">
+                    <h3>Priya Sharma</h3>
+                    <p class="member-role">Vice President</p>
+                    <p class="member-bio">Full-stack developer with expertise in web technologies. Coordinating technical projects and workshops.</p>
+                    <div class="member-skills">
+                        <span class="skill-tag">Web Dev</span>
+                        <span class="skill-tag">React</span>
+                        <span class="skill-tag">Node.js</span>
+                    </div>
+                    <div class="member-social">
+                        <a href="#" class="social-icon">📧</a>
+                        <a href="#" class="social-icon">💼</a>
+                        <a href="#" class="social-icon">🐙</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="member-card">
+                <div class="member-avatar">👨‍🔧</div>
+                <div class="member-info">
+                    <h3>Rahul Patel</h3>
+                    <p class="member-role">Technical Lead</p>
+                    <p class="member-bio">IoT and embedded systems enthusiast. Managing technical infrastructure and innovation labs.</p>
+                    <div class="member-skills">
+                        <span class="skill-tag">IoT</span>
+                        <span class="skill-tag">Arduino</span>
+                        <span class="skill-tag">Cloud</span>
+                    </div>
+                    <div class="member-social">
+                        <a href="#" class="social-icon">📧</a>
+                        <a href="#" class="social-icon">💼</a>
+                        <a href="#" class="social-icon">🐙</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="member-card">
+                <div class="member-avatar">👩‍🎨</div>
+                <div class="member-info">
+                    <h3>Ananya Singh</h3>
+                    <p class="member-role">Design Lead</p>
+                    <p class="member-bio">UI/UX designer creating beautiful and intuitive user experiences for all our projects.</p>
+                    <div class="member-skills">
+                        <span class="skill-tag">UI/UX</span>
+                        <span class="skill-tag">Figma</span>
+                        <span class="skill-tag">Design</span>
+                    </div>
+                    <div class="member-social">
+                        <a href="#" class="social-icon">📧</a>
+                        <a href="#" class="social-icon">💼</a>
+                        <a href="#" class="social-icon">🐙</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Core Team Members -->
+    <section class="team-section">
+        <div class="section-title">
+            <h2>Core Team Members</h2>
+            <p>Dedicated members driving our initiatives forward</p>
+        </div>
+        <div class="team-grid">
+            <div class="team-member-card">
+                <div class="team-avatar">👨‍💻</div>
+                <h4>Vikram Reddy</h4>
+                <p class="team-role">Web Developer</p>
+                <p class="team-specialty">React & Next.js Expert</p>
+            </div>
+
+            <div class="team-member-card">
+                <div class="team-avatar">👩‍💻</div>
+                <h4>Neha Kapoor</h4>
+                <p class="team-role">AI Researcher</p>
+                <p class="team-specialty">Machine Learning</p>
+            </div>
+
+            <div class="team-member-card">
+                <div class="team-avatar">👨‍🔬</div>
+                <h4>Sanjay Mehta</h4>
+                <p class="team-role">Data Scientist</p>
+                <p class="team-specialty">Analytics & Visualization</p>
+            </div>
+
+            <div class="team-member-card">
+                <div class="team-avatar">👩‍🚀</div>
+                <h4>Kavya Iyer</h4>
+                <p class="team-role">Mobile Developer</p>
+                <p class="team-specialty">Flutter & React Native</p>
+            </div>
+
+            <div class="team-member-card">
+                <div class="team-avatar">👨‍🏫</div>
+                <h4>Aditya Gupta</h4>
+                <p class="team-role">Workshop Lead</p>
+                <p class="team-specialty">Python & Django</p>
+            </div>
+
+            <div class="team-member-card">
+                <div class="team-avatar">👩‍🔬</div>
+                <h4>Divya Nair</h4>
+                <p class="team-role">IoT Specialist</p>
+                <p class="team-specialty">Embedded Systems</p>
+            </div>
+
+            <div class="team-member-card">
+                <div class="team-avatar">👨‍💼</div>
+                <h4>Karthik Rao</h4>
+                <p class="team-role">Backend Developer</p>
+                <p class="team-specialty">Node.js & MongoDB</p>
+            </div>
+
+            <div class="team-member-card">
+                <div class="team-avatar">👩‍🎓</div>
+                <h4>Shreya Joshi</h4>
+                <p class="team-role">Content Writer</p>
+                <p class="team-specialty">Technical Documentation</p>
+            </div>
+
+            <div class="team-member-card">
+                <div class="team-avatar">👨‍🎤</div>
+                <h4>Rohan Das</h4>
+                <p class="team-role">Event Coordinator</p>
+                <p class="team-specialty">Community Management</p>
+            </div>
+
+            <div class="team-member-card">
+                <div class="team-avatar">👩‍💼</div>
+                <h4>Meera Pillai</h4>
+                <p class="team-role">Marketing Lead</p>
+                <p class="team-specialty">Social Media & Outreach</p>
+            </div>
+
+            <div class="team-member-card">
+                <div class="team-avatar">👨‍🔧</div>
+                <h4>Aryan Shah</h4>
+                <p class="team-role">DevOps Engineer</p>
+                <p class="team-specialty">CI/CD & Cloud</p>
+            </div>
+
+            <div class="team-member-card">
+                <div class="team-avatar">👩‍🎨</div>
+                <h4>Ritika Verma</h4>
+                <p class="team-role">Graphic Designer</p>
+                <p class="team-specialty">Branding & Visuals</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="stats-section">
+        <div class="stats-container">
+            <div class="stat-box">
+                <h3>200+</h3>
+                <p>Active Members</p>
+            </div>
+            <div class="stat-box">
+                <h3>50+</h3>
+                <p>Core Contributors</p>
+            </div>
+            <div class="stat-box">
+                <h3>15+</h3>
+                <p>Departments</p>
+            </div>
+            <div class="stat-box">
+                <h3>100%</h3>
+                <p>Passion & Dedication</p>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2025 Innovators Hub. All rights reserved. Built with passion by students, for students.</p>
+    </footer>
+
+    <script>
+        const menuToggle = document.getElementById('menuToggle');
+        const navLinks = document.getElementById('navLinks');
+
+        menuToggle.addEventListener('click', function() {
+            navLinks.classList.toggle('active');
+        });
+    </script>
+</body>
+</html>
